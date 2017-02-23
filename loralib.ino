@@ -1,11 +1,15 @@
-void sleepLoRa(void){ // LoRaを一定時間省電力モードに移行させる
+/*void sleepLoRa(void){ // LoRaを一定時間省電力モードに移行させる
   
 }
 
 void wakeupLoRa(void){ // LoRaが省電力モードから復帰しているか確認
-  
+  initLoRa();
 }
+*/
+int detect_poweron(char *data){ //　管理者からのパワーオン指令をチェックする関数だが今のところ未実装 戻り値は指令があれば1、なければ0
 
+  return 0;
+}
 void _resetLoRa(void) {
   pinMode(PIN_RESET, OUTPUT);
   digitalWrite(PIN_RESET, LOW);
