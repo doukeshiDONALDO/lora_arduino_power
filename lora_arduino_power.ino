@@ -11,7 +11,7 @@
 #define GATE_PIN 10 // センサ回路へ電源供給するFETのゲートをこのポートに接続　
 #define START_MINUTE 0 // 開始する分
 int work = 0; // 処理実行フラグ
-time_t start_m; // 処理開始分
+time_t start_m; // 処理開始時刻
 TimeElements te;            // holds the time elements for setting the time
 
 SoftwareSerial loraSerial(11, 12); // LoRa通信用
@@ -60,15 +60,12 @@ void loop() {
   free(packet);
 
 
-
   breakTime(now(), te);
-  if (te.Second == 0 &&  te.Minute == START_MINUTE || work == 1) { // 現時刻の秒が0sかつ開始する分の場合
+  if (te.Second == 0 &&  te.Minute == START_MINUTE || work == 1) { // 現時刻の秒が0sかつ開始する分の場合　または管理者からのパワーオン指令が来た場合
     start_m = now();
     work = 0;
   }
 
-
-  Serial.println(te.Minute);
 
   /* ************************************************** */
   /* 十分間パワーオン時処理 */
