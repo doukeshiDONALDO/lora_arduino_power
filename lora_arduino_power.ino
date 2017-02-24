@@ -4,7 +4,7 @@
 #define FSID            0x02 // FieldServer ID
 #define PIN_RESET       13
 #define LORA_RESET_WAIT 100
-#define LORA_INIT_WAIT  200
+#define LORA_INIT_WAIT  500
 #define LORA_SEND_BUF   70 // 64
 #define LORA_RECV_BUF   70 // 64
 
@@ -32,21 +32,24 @@ void setup() {
   digitalWrite(GATE_PIN, LOW);
 
   initLoRa();
-  readLoRa();
+  // readLoRa();
 }
 
 void loop() {
   //ADCSRA &= ~(1<<ADEN); //アナログ変換回路OFF？　未検証
-
+  Serial.println(" in main loop");
   char data[LORA_RECV_BUF];
   Packet *packet = NULL;
 
   /* ************************************************** */
   /* 管理者からのパワーオン指令を受け取る受信処理 */
   /* ************************************************** */
-  recvLoRa(data, 0); readLoRa();
+  recvLoRa(data, 10000); readLoRa();
   // パケット解析
   packet = parseLoRa(data);
+  Serial.print("after if(packet == NULL)");
+  Serial.println(packet->payload);
+
   if (packet == NULL) return;
 
   Serial.println("--------- Packet Info ---------");
